@@ -16,7 +16,12 @@ public class GeneradorAliens : MonoBehaviour
 	private const int COLUMNAS = 7;
 
 	// Enumeración para expresar el sentido del movimiento
-	private enum direccion { IZQ, DER };
+	private enum direccion
+	{
+		IZQ,
+		DER}
+
+	;
 
 	// Rumbo que lleva el pack de aliens
 	private direccion rumbo = direccion.DER;
@@ -30,6 +35,7 @@ public class GeneradorAliens : MonoBehaviour
 	// Velocidad a la que se desplazan los aliens (medido en u/s)
 	private float velocidad = 5f;
 	private float velocidadDescenso;
+	private int contador = 0;
 	// Use this for initialization
 	void Start ()
 	{
@@ -44,12 +50,19 @@ public class GeneradorAliens : MonoBehaviour
 		limiteDer = 1.0f * distanciaHorizontal - 1;
 
 		//velocidad descenso
-		velocidadDescenso = velocidad/40;
+		velocidadDescenso = velocidad / 40;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
+		//aumentamos la velocidad cada 60 updates
+		contador++;
+		if (contador == 60) {
+			contador = 0;
+			velocidad += 0.2f;
+		}
+
 		// Contador para saber si hemos terminado
 		int numAliens = 0;
 
@@ -91,7 +104,7 @@ public class GeneradorAliens : MonoBehaviour
 		}
 
 		// Si no quedan aliens, hemos terminado
-		if( numAliens == 0 ) {
+		if (numAliens == 0) {
 			SceneManager.LoadScene ("Nivel1");
 		}
 
@@ -101,7 +114,7 @@ public class GeneradorAliens : MonoBehaviour
 
 				// Comprobamos que haya objeto
 				if (aliens [i, j] != null) {
-					aliens[i,j].transform.Translate (Vector2.down * velocidadDescenso * Time.deltaTime);
+					aliens [i, j].transform.Translate (Vector2.down * velocidadDescenso * Time.deltaTime);
 
 
 				}
