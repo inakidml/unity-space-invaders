@@ -15,13 +15,14 @@ public class ControlNave : MonoBehaviour
 
 	//Acceso al fondo
 	public GameObject fondo;
-	private float posicionInicialFondo;
+	//private float posicionInicialFondo;
+	private Vector2 direccionFondo = Vector2.left;
 
 	// Use this for initialization
 	void Start ()
 	{
 		fondo = GameObject.Find("FondoEspacio");
-		posicionInicialFondo = fondo.transform.position.x;
+		//posicionInicialFondo = fondo.transform.position.x;
 	}
 	
 	// Update is called once per frame
@@ -39,15 +40,19 @@ public class ControlNave : MonoBehaviour
 			
 			// Nos movemos a la izquierda hasta llegar al límite para entrar por el otro lado
 			if (transform.position.x > limiteIzq) {
+				
 				transform.Translate (Vector2.left * velocidad * Time.deltaTime);
 				//movemos el fondo
-				fondo.transform.Translate (Vector2.right * 1f * Time.deltaTime);
+				fondo.transform.Translate (-(direccionFondo * 1f * Time.deltaTime));
 
 			} else {
 				transform.position = new Vector2 (limiteDer, transform.position.y);
-				//reiniciamos el fondo
-				fondo.transform.position = new Vector2(posicionInicialFondo, fondo.transform.position.y);
-				fondo.transform.position.z = 4;
+				//cambiamos la dirección del fondo
+				if (direccionFondo == Vector2.left) {
+					direccionFondo = Vector2.right;
+				} else {
+					direccionFondo = Vector2.left;
+				}
 			}
 		}
 
@@ -59,12 +64,15 @@ public class ControlNave : MonoBehaviour
 			if (transform.position.x < limiteDer) {
 				transform.Translate (Vector2.right * velocidad * Time.deltaTime);
 				//movemos el fondo
-				fondo.transform.Translate (Vector2.left * 1f * Time.deltaTime);
+				fondo.transform.Translate (direccionFondo * 1f * Time.deltaTime);
 			} else {
 				transform.position = new Vector2 (limiteIzq, transform.position.y);	
-				//reiniciamos el fondo
-				fondo.transform.position = new Vector2(posicionInicialFondo, fondo.transform.position.y);
-				fondo.transform.position.z = 4;
+				//cambiamos la dirección del fondo
+				if (direccionFondo == Vector2.left) {
+					direccionFondo = Vector2.right;
+				} else {
+					direccionFondo = Vector2.left;
+				}
 			}
 		}
 
