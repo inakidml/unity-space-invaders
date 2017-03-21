@@ -50,7 +50,11 @@ public class ControlAlien : MonoBehaviour
 			Destroy (gameObject);
 
 		} else if (coll.gameObject.tag == "nave") {
-			SceneManager.LoadScene ("Nivel1");
+			//si toca un marciano la nave, se acaba el juego, pasamos la puntuación a una variable de PlayerPrefs
+			int puntos = marcador.GetComponent<ControlMarcador> ().puntos;
+			PlayerPrefs.SetInt("Player Score", puntos);
+			//cargamos escena GameOver
+			SceneManager.LoadScene ("GameOver");
 		}
 	}
 }
