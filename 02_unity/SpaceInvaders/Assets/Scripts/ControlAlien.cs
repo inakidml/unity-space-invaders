@@ -50,7 +50,11 @@ public class ControlAlien : MonoBehaviour
 			Destroy (gameObject);
 
 		} else if (coll.gameObject.tag == "nave") {
-			SceneManager.LoadScene ("Nivel1");
+			
+			int puntos = marcador.GetComponent<ControlMarcador> ().puntos;
+			PlayerPrefs.SetInt("Player Score", puntos);
+
+			SceneManager.LoadScene ("GameOver");
 		}
 	}
 }
