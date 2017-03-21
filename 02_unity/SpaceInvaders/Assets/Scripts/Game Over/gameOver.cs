@@ -18,7 +18,6 @@ public class gameOver : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		int puntos = PlayerPrefs.GetInt ("Player Score");
-		GameObject puntuacion = GameObject.Find ("Marcador");
 		puntuación.GetComponent<Text> ().text = "Puntuación: " + puntos;
 	}
 
