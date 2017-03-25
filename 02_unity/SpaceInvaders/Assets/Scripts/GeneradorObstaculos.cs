@@ -11,12 +11,12 @@ public class GeneradorObstaculos : MonoBehaviour {
 	private Rigidbody2D[,] piezasObstaculo;
 
 	// Tamaño de la invasión alienígena
-	private const int FILAS = 4;
-	private const int COLUMNAS = 7;
+	private const int FILAS = 3;
+	private const int COLUMNAS = 15;
 
 	// Use this for initialization
 	void Start () {
-		
+		generarObstaculo (FILAS, COLUMNAS, 0.1f, 0.1f);
 	}
 	
 	// Update is called once per frame
@@ -42,14 +42,14 @@ public class GeneradorObstaculos : MonoBehaviour {
 		for (int i = 0; i < filas; i++) {
 			for (int j = 0; j < columnas; j++) {
 
-				// Posición de cada alien
+				// Posición de cada trozo
 				Vector2 posicion = new Vector2 (origen.x + (espacioH * j), origen.y + (espacioV * i));
 
 				// Instanciamos el objeto partiendo del prefab
-			//	Rigidbody2D alien = (Rigidbody2D)Instantiate (prefabAlien1, posicion, transform.rotation);
+				Rigidbody2D trozoObstaculo = (Rigidbody2D)Instantiate (prefabPiezaObstaculo, posicion, transform.rotation);
 
 				// Guardamos el alien en el array
-			//	aliens [i, j] = alien;
+				piezasObstaculo [i, j] = trozoObstaculo;
 
 				// Escala opcional, por defecto 1.0f (sin escala)
 				// Nota: El prefab original ya está escalado a 0.2f
