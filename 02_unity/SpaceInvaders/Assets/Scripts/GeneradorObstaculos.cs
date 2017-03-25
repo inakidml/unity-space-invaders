@@ -11,12 +11,12 @@ public class GeneradorObstaculos : MonoBehaviour {
 	private Rigidbody2D[,] piezasObstaculo;
 
 	// Tamaño de la invasión alienígena
-	private const int FILAS = 3;
-	private const int COLUMNAS = 15;
+	private const int FILAS = 2;
+	private const int COLUMNAS = 10;
 
 	// Use this for initialization
 	void Start () {
-		generarObstaculo (FILAS, COLUMNAS, 0.1f, 0.1f);
+		generarObstaculo (FILAS, COLUMNAS, 0.5f, 0.5f);
 	}
 	
 	// Update is called once per frame
