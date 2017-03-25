@@ -43,8 +43,7 @@ public class GeneradorObstaculos : MonoBehaviour {
 			for (int j = 0; j < columnas; j++) {
 
 				// Posición de cada trozo
-				Vector2 posicion = new Vector2 (origen.x + (espacioH * j), origen.y + (espacioV * i));
-
+				Vector3 posicion = new Vector3 (origen.x + (espacioH * j), origen.y + (espacioV * i), 1);
 				// Instanciamos el objeto partiendo del prefab
 				Rigidbody2D trozoObstaculo = (Rigidbody2D)Instantiate (prefabPiezaObstaculo, posicion, transform.rotation);
 

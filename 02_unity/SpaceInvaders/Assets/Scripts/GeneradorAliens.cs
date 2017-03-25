@@ -33,7 +33,7 @@ public class GeneradorAliens : MonoBehaviour
 	private float limiteDer;
 
 	// Velocidad a la que se desplazan los aliens (medido en u/s)
-	private float velocidad = 5f;
+	private float velocidad = 6f;
 	private float velocidadDescenso;
 	private int contador = 0;
 	// Use this for initialization
@@ -50,7 +50,7 @@ public class GeneradorAliens : MonoBehaviour
 		limiteDer = 1.0f * distanciaHorizontal - 1;
 
 		//velocidad descenso
-		velocidadDescenso = velocidad / 40;
+		velocidadDescenso = velocidad / 30;
 	}
 	
 	// Update is called once per frame
