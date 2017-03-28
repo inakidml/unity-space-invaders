@@ -49,7 +49,7 @@ public class ControlAlien : MonoBehaviour
 			efectoExplosion.GetComponent<AudioSource> ().Play ();
 			Destroy (gameObject);
 
-		} else if (coll.gameObject.tag == "nave") {
+		} else if (coll.gameObject.tag == "nave" || coll.gameObject.tag == "NaveAzul" || coll.gameObject.tag == "NaveRoja") {
 			//si toca un marciano la nave, se acaba el juego, pasamos la puntuación a una variable de PlayerPrefs
 			int puntos = marcador.GetComponent<ControlMarcador> ().puntos;
 			PlayerPrefs.SetInt("Player Score", puntos);

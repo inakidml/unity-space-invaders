@@ -14,13 +14,14 @@ public class ControlNave : MonoBehaviour
 	public Rigidbody2D disparo;
 
 	//Acceso al fondo
-	public GameObject fondo;
+	private GameObject fondo;
 	//private float posicionInicialFondo;
 	private Vector2 direccionFondo = Vector2.left;
 
 	// Use this for initialization
 	void Start ()
 	{
+		
 		fondo = GameObject.Find("FondoEspacio");
 		//posicionInicialFondo = fondo.transform.position.x;
 	}
