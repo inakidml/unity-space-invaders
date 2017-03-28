@@ -27,7 +27,7 @@ public class GeneradorAliens : MonoBehaviour
 	private direccion rumbo = direccion.DER;
 
 	// Posición vertical de la horda (lo iremos restando de la .y de cada alien)
-	private float altura = 0.5f;
+	//private float altura = 0.5f;
 	// Límites de la pantalla
 	private float limiteIzq;
 	private float limiteDer;
