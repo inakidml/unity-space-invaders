@@ -1,9 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ControlAlien : MonoBehaviour
-{
+public class ControlAlien2 : MonoBehaviour {
+
 	// Conexión al marcador, para poder actualizarlo
 	private GameObject marcador;
 
@@ -12,7 +13,7 @@ public class ControlAlien : MonoBehaviour
 
 	// Objeto para reproducir la explosión de un alien
 	private GameObject efectoExplosion;
-	private int numDisparos = 1;
+	private int numDisparos = 2;
 
 	// Use this for initialization
 	void Start ()
@@ -23,11 +24,11 @@ public class ControlAlien : MonoBehaviour
 		// Objeto para reproducir la explosión de un alien
 		efectoExplosion = GameObject.Find ("EfectoExplosion");
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
-	
+
 	}
 
 	void OnCollisionEnter2D (Collision2D coll)

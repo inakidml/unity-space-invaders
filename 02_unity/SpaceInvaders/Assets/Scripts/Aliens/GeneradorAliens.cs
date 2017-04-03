@@ -7,6 +7,7 @@ public class GeneradorAliens : MonoBehaviour
 
 	// Publicamos la variable para conectarla desde el editor
 	public Rigidbody2D prefabAlien1;
+	public Rigidbody2D prefabAlien2;
 
 	// Referencia para guardar una matriz de objetos
 	private Rigidbody2D[,] aliens;
@@ -163,9 +164,15 @@ public class GeneradorAliens : MonoBehaviour
 
 				// Posición de cada alien
 				Vector2 posicion = new Vector2 (origen.x + (espacioH * j), origen.y + (espacioV * i));
+				Rigidbody2D alien;
+				if ((i == 0 && j == 0) || (i == filas-1 && j == 0) || (i == 0 && j == columnas-1) || (i==filas-1 && j== columnas-1)) {
+					// Instanciamos el objeto partiendo del prefab
+					alien = (Rigidbody2D)Instantiate (prefabAlien2, posicion, transform.rotation);
+				} else {
+					// Instanciamos el objeto partiendo del prefab
+					alien = (Rigidbody2D)Instantiate (prefabAlien1, posicion, transform.rotation);
+				}
 
-				// Instanciamos el objeto partiendo del prefab
-				Rigidbody2D alien = (Rigidbody2D)Instantiate (prefabAlien1, posicion, transform.rotation);
 
 				// Guardamos el alien en el array
 				aliens [i, j] = alien;
