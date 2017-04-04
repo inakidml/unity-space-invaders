@@ -37,6 +37,14 @@ public class controlMeteeorObstaculo : MonoBehaviour {
 		
 			Destroy (gameObject);
 
-		} 
+		} else if (coll.gameObject.tag == "disparoEspecial") {
+
+			Destroy (coll.gameObject);
+	
+
+			Destroy (gameObject);
+		
+	
+		}
 	}
 }

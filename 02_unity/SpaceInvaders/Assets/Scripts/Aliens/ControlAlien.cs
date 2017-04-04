@@ -14,6 +14,11 @@ public class ControlAlien : MonoBehaviour
 	private GameObject efectoExplosion;
 	private int numDisparos = 1;
 
+	// Fuerza de lanzamiento de la explosión
+	private float fuerza = 0.5f;
+
+	public Rigidbody2D prefabExplosión;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -27,6 +32,7 @@ public class ControlAlien : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+
 	
 	}
 
@@ -52,12 +58,31 @@ public class ControlAlien : MonoBehaviour
 			}
 
 
+
 		} else if (coll.gameObject.tag == "nave" || coll.gameObject.tag == "NaveAzul" || coll.gameObject.tag == "NaveRoja") {
 			//si toca un marciano la nave, se acaba el juego, pasamos la puntuación a una variable de PlayerPrefs
 			int puntos = marcador.GetComponent<ControlMarcador> ().puntos;
 			PlayerPrefs.SetInt("Player Score", puntos);
 			//cargamos escena GameOver
 			SceneManager.LoadScene ("GameOver");
+		}else if(coll.gameObject.tag=="disparoEspecial"){
+			Rigidbody2D d = (Rigidbody2D)Instantiate (prefabExplosión, transform.position, transform.rotation);
+			// Desactivar la gravedad para este objeto, si no, ¡se cae!
+			d.gravityScale = 0;
+			// Posición de partida, en la punta de la nave
+			d.transform.Translate (Vector2.up * 0.0f);
+			// Lanzarlo
+			d.AddForce (Vector2.up * fuerza* 2, ForceMode2D.Impulse);
+			// Sumar la puntuación al marcador
+			marcador.GetComponent<ControlMarcador> ().puntos += puntos;
+			if (coll.gameObject.GetComponent<ControlDisparoEspecial> ().valorDisparo <= 1) {
+				Destroy (coll.gameObject);
+			} else {
+				coll.gameObject.GetComponent<ControlDisparoEspecial> ().valorDisparo--;
+				coll.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * fuerza* 2, ForceMode2D.Impulse);
+			}
+
+			Destroy (gameObject);
 		}
 	}
 }

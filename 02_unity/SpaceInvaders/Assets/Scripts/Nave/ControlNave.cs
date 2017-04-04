@@ -13,10 +13,16 @@ public class ControlNave : MonoBehaviour
 	// Acceso al prefab del disparo
 	public Rigidbody2D disparo;
 
+	public Rigidbody2D disparoEspecial;
+	private int numDisparos = 3;
+
 	//Acceso al fondo
 	private GameObject fondo;
 	//private float posicionInicialFondo;
 	private Vector2 direccionFondo = Vector2.left;
+
+	// Conexión al marcador, para poder actualizarlo
+	private GameObject marcador;
 
 	// Use this for initialization
 	void Start ()
@@ -24,11 +30,19 @@ public class ControlNave : MonoBehaviour
 		
 		fondo = GameObject.Find("FondoEspacio");
 		//posicionInicialFondo = fondo.transform.position.x;
+
+		// Localizamos el objeto que contiene el marcador
+		marcador = GameObject.Find ("Marcador");
 	}
 	
 	// Update is called once per frame
 	void Update ()
+
 	{
+		// Sumar la puntuación al marcador
+		if(numDisparos >= 0){
+			marcador.GetComponent<ControlMarcador> ().numDisparos = numDisparos;}
+
 		// Calculamos la anchura visible de la cámara en pantalla
 		float distanciaHorizontal = Camera.main.orthographicSize * Screen.width / Screen.height;
 
@@ -81,6 +95,10 @@ public class ControlNave : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			disparar ();
 		}
+		//Disparo especial
+		if (Input.GetKeyDown (KeyCode.DownArrow)){
+			dispararEspecial ();
+		}
 	}
 
 	void disparar ()
@@ -96,6 +114,25 @@ public class ControlNave : MonoBehaviour
 
 		// Lanzarlo
 		d.AddForce (Vector2.up * fuerza, ForceMode2D.Impulse);	
+	}
+
+	void dispararEspecial(){
+		if(numDisparos>0){
+		// Hacemos copias del prefab del disparo y las lanzamos
+		Rigidbody2D d = (Rigidbody2D)Instantiate (disparoEspecial, transform.position, transform.rotation);
+
+		// Desactivar la gravedad para este objeto, si no, ¡se cae!
+		d.gravityScale = 0;
+
+		// Posición de partida, en la punta de la nave
+		d.transform.Translate (Vector2.up * 0.7f);
+
+		// Lanzarlo
+			d.AddForce (Vector2.up * fuerza * 10, ForceMode2D.Impulse);	}
+		numDisparos--;
+	
+	
+	
 	}
 
 }
