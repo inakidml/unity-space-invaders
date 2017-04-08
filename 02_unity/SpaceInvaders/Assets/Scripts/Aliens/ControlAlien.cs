@@ -65,6 +65,7 @@ public class ControlAlien : MonoBehaviour
 			PlayerPrefs.SetInt("Player Score", puntos);
 			//cargamos escena GameOver
 			SceneManager.LoadScene ("GameOver");
+
 		}else if(coll.gameObject.tag=="disparoEspecial"){
 			Rigidbody2D d = (Rigidbody2D)Instantiate (prefabExplosión, transform.position, transform.rotation);
 			// Desactivar la gravedad para este objeto, si no, ¡se cae!
