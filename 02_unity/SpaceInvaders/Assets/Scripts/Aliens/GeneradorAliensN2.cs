@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GeneradorAliens : MonoBehaviour
-{
+public class GeneradorAliensN2 : MonoBehaviour {
 
 	// Publicamos la variable para conectarla desde el editor
 	public Rigidbody2D prefabAlien1;
@@ -13,8 +13,8 @@ public class GeneradorAliens : MonoBehaviour
 	private Rigidbody2D[,] aliens;
 
 	// Tamaño de la invasión alienígena
-	private const int FILAS = 4;
-	private const int COLUMNAS = 7;
+	private const int FILAS = 10;
+	private const int COLUMNAS = 14;
 
 	// Enumeración para expresar el sentido del movimiento
 	private enum direccion
@@ -41,7 +41,7 @@ public class GeneradorAliens : MonoBehaviour
 	void Start ()
 	{
 		// Rejilla de 4x7 aliens
-		generarAliens (FILAS, COLUMNAS, 1.5f, 1.0f);
+		generarAliens (FILAS, COLUMNAS, 0.7f, 0.4f);
 
 		// Calculamos la anchura visible de la cámara en pantalla
 		float distanciaHorizontal = Camera.main.orthographicSize * Screen.width / Screen.height;
@@ -53,7 +53,7 @@ public class GeneradorAliens : MonoBehaviour
 		//velocidad descenso
 		velocidadDescenso = velocidad / 30;
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -124,7 +124,7 @@ public class GeneradorAliens : MonoBehaviour
 
 		// Si al menos un alien ha tocado el borde, todo el pack cambia de rumbo
 		if (limiteAlcanzado == true) {
-/*			for (int i = 0; i < FILAS; i++) {
+			/*			for (int i = 0; i < FILAS; i++) {
 				for (int j = 0; j < COLUMNAS; j++) {
 
 					// Comprobamos que haya objeto
@@ -165,7 +165,7 @@ public class GeneradorAliens : MonoBehaviour
 				// Posición de cada alien
 				Vector2 posicion = new Vector2 (origen.x + (espacioH * j), origen.y + (espacioV * i));
 				Rigidbody2D alien;
-				if ((i == 0 && j == 0) || (i == filas-1 && j == 0) || (i == 0 && j == columnas-1) || (i==filas-1 && j== columnas-1)) {
+				if ((!(i%2==0)) ) {
 					// Instanciamos el objeto partiendo del prefab
 					alien = (Rigidbody2D)Instantiate (prefabAlien2, posicion, transform.rotation);
 				} else {
@@ -179,7 +179,7 @@ public class GeneradorAliens : MonoBehaviour
 
 				// Escala opcional, por defecto 1.0f (sin escala)
 				// Nota: El prefab original ya está escalado a 0.2f
-				alien.transform.localScale = new Vector2 (0.2f * escala, 0.2f * escala);
+				alien.transform.localScale = new Vector2 (0.1f * escala, 0.1f * escala);
 			}
 		}
 
