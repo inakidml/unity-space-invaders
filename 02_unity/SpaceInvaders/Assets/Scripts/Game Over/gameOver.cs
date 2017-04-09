@@ -19,6 +19,7 @@ public class gameOver : MonoBehaviour {
 	void Update () {
 		int puntos = PlayerPrefs.GetInt ("Player Score");
 		puntuación.GetComponent<Text> ().text = "Puntuación: " + puntos;
+		Debug.Log (puntos);
 	}
 
 	void TaskOnClick(){
