@@ -36,7 +36,8 @@ public class GeneradorAliens : MonoBehaviour
 	// Velocidad a la que se desplazan los aliens (medido en u/s)
 	private float velocidad = 6f;
 	private float velocidadDescenso;
-	private int contador = 0;
+	private float startTime;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -52,16 +53,20 @@ public class GeneradorAliens : MonoBehaviour
 
 		//velocidad descenso
 		velocidadDescenso = velocidad / 30;
+
+		startTime = Time.time;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		//aumentamos la velocidad cada 60 updates
-		contador++;
-		if (contador == 60) {
-			contador = 0;
+		//aumentamos la velocidad cada medio segundo
+		float ahora = Time.time;
+		float difTiempo = ahora - startTime;
+
+		if (difTiempo > 0.5) {
 			velocidad += 0.2f;
+			startTime = Time.time;
 		}
 
 		// Contador para saber si hemos terminado
