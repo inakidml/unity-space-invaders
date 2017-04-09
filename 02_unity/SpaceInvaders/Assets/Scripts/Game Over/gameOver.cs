@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class gameOver : MonoBehaviour {
 	public Button restartButton;
-	public GameObject puntuación;
+	public GameObject puntuacion;
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +18,7 @@ public class gameOver : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		int puntos = PlayerPrefs.GetInt ("Player Score");
-		puntuación.GetComponent<Text> ().text = "Puntuación: " + puntos;
+		puntuacion.GetComponent<Text> ().text = "Puntuación: " + puntos;
 		Debug.Log (puntos);
 	}
 
