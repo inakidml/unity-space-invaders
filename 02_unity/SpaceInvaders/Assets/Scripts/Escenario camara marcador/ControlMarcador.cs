@@ -7,7 +7,7 @@ public class ControlMarcador : MonoBehaviour
 
 	// Puntos ganados en la partida
 	public int puntos = 0;
-	public int numDisparos = 100;
+	public int numDisparos;
 	public int numDisparosTwo;
 
 	// Objeto donde mostramos el texto

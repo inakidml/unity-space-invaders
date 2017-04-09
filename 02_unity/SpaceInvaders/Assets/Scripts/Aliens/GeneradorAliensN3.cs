@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GeneradorAliensN2 : MonoBehaviour {
-
+public class GeneradorAliensN3 : MonoBehaviour
+{
 	// Publicamos la variable para conectarla desde el editor
 	public Rigidbody2D prefabAlien1;
 	public Rigidbody2D prefabAlien2;
@@ -13,8 +13,10 @@ public class GeneradorAliensN2 : MonoBehaviour {
 	private Rigidbody2D[,] aliens;
 
 	// Tamaño de la invasión alienígena
-	private const int FILAS = 10;
-	private const int COLUMNAS = 14;
+	private const int FILAS = 13;
+	private const int COLUMNAS = 17;
+
+	int[,] posicionMarcianos;
 
 	// Enumeración para expresar el sentido del movimiento
 	private enum direccion
@@ -40,8 +42,25 @@ public class GeneradorAliensN2 : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
+		//generar posiciones
+		posicionMarcianos = new int[FILAS, COLUMNAS] { 
+			{ 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 2, 1, 2, 2, 2, 1, 2, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 2, 1, 1, 1, 2, 1, 1, 1, 2, 0, 0, 0, 0 },
+			{ 0, 0, 0, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 0, 0, 0 },
+			{ 0, 0, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 0, 0 },
+			{ 0, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 0 },
+			{ 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2 },
+			{ 0, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 0 },
+			{ 0, 0, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 0, 0 },
+			{ 0, 0, 0, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 0, 0, 0 },
+			{ 0, 0, 0, 0, 2, 1, 1, 1, 2, 1, 1, 1, 2, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 2, 1, 2, 2, 2, 1, 2, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0 },
+		};
+
 		// Rejilla de 4x7 aliens
-		generarAliens (FILAS, COLUMNAS, 0.7f, 0.4f);
+		generarAliens (FILAS, COLUMNAS, 0.7f, 0.4f, 0.5f);
 
 		// Calculamos la anchura visible de la cámara en pantalla
 		float distanciaHorizontal = Camera.main.orthographicSize * Screen.width / Screen.height;
@@ -54,6 +73,8 @@ public class GeneradorAliensN2 : MonoBehaviour {
 		velocidadDescenso = velocidad / 30;
 
 		startTime = Time.time;
+
+
 	}
 
 	// Update is called once per frame
@@ -110,7 +131,7 @@ public class GeneradorAliensN2 : MonoBehaviour {
 
 		// Si no quedan aliens, hemos terminado
 		if (numAliens == 0) {
-			SceneManager.LoadScene ("Nivel3");
+			SceneManager.LoadScene ("Start");
 		}
 
 		//bajando aliens
@@ -169,24 +190,33 @@ public class GeneradorAliensN2 : MonoBehaviour {
 				// Posición de cada alien
 				Vector2 posicion = new Vector2 (origen.x + (espacioH * j), origen.y + (espacioV * i));
 				Rigidbody2D alien;
-				if ((!(i%2==0)) ) {
-					// Instanciamos el objeto partiendo del prefab
-					alien = (Rigidbody2D)Instantiate (prefabAlien2, posicion, transform.rotation);
-				} else {
+
+				switch (posicionMarcianos [i, j]) {
+				case(0):
+					alien = null;
+					break;
+				case(1):
 					// Instanciamos el objeto partiendo del prefab
 					alien = (Rigidbody2D)Instantiate (prefabAlien1, posicion, transform.rotation);
-				}
-
+					break;
+				case(2):
+					alien = (Rigidbody2D)Instantiate (prefabAlien2, posicion, transform.rotation);
+					break;
+				default:
+					alien = null;
+					break;
+					}
 
 				// Guardamos el alien en el array
 				aliens [i, j] = alien;
 
 				// Escala opcional, por defecto 1.0f (sin escala)
 				// Nota: El prefab original ya está escalado a 0.2f
-				alien.transform.localScale = new Vector2 (0.1f * escala, 0.1f * escala);
+				if (alien != null) {
+					alien.transform.localScale = new Vector2 (0.2f * escala, 0.2f * escala);
+				}
 			}
 		}
 
 	}
-
 }

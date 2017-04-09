@@ -22,7 +22,7 @@ public class gameOver : MonoBehaviour {
 	}
 
 	void TaskOnClick(){
-		SceneManager.LoadScene ("Nivel1");
+		SceneManager.LoadScene ("Start");
 		//Debug.Log ("You have clicked the button!");
 	}
 }

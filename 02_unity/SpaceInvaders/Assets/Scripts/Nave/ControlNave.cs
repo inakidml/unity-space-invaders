@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 using System.Collections;
 
 public class ControlNave : MonoBehaviour
@@ -14,7 +14,7 @@ public class ControlNave : MonoBehaviour
 	public Rigidbody2D disparo;
 
 	public Rigidbody2D disparoEspecial;
-	private int numDisparos = 3;
+	public int numDisparos = 3;
 
 	//Acceso al fondo
 	private GameObject fondo;
@@ -33,16 +33,14 @@ public class ControlNave : MonoBehaviour
 
 		// Localizamos el objeto que contiene el marcador
 		marcador = GameObject.Find ("Marcador");
+
+		marcador.GetComponent<ControlMarcador> ().numDisparos = numDisparos;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 
 	{
-		// Sumar la puntuación al marcador
-		if(numDisparos >= 0){
-			marcador.GetComponent<ControlMarcador> ().numDisparos = numDisparos;}
-
 		// Calculamos la anchura visible de la cámara en pantalla
 		float distanciaHorizontal = Camera.main.orthographicSize * Screen.width / Screen.height;
 
@@ -58,7 +56,9 @@ public class ControlNave : MonoBehaviour
 				
 				transform.Translate (Vector2.left * velocidad * Time.deltaTime);
 				//movemos el fondo
-				fondo.transform.Translate (-(direccionFondo * 1f * Time.deltaTime));
+				if (fondo != null) {
+					fondo.transform.Translate (-(direccionFondo * 1f * Time.deltaTime));
+				}
 
 			} else {
 				transform.position = new Vector2 (limiteDer, transform.position.y);
@@ -79,7 +79,9 @@ public class ControlNave : MonoBehaviour
 			if (transform.position.x < limiteDer) {
 				transform.Translate (Vector2.right * velocidad * Time.deltaTime);
 				//movemos el fondo
-				fondo.transform.Translate (direccionFondo * 1f * Time.deltaTime);
+				if (fondo != null) {
+					fondo.transform.Translate (direccionFondo * 1f * Time.deltaTime);
+				}
 			} else {
 				transform.position = new Vector2 (limiteIzq, transform.position.y);	
 				//cambiamos la dirección del fondo
@@ -117,22 +119,30 @@ public class ControlNave : MonoBehaviour
 	}
 
 	void dispararEspecial(){
-		if(numDisparos>0){
-		// Hacemos copias del prefab del disparo y las lanzamos
-		Rigidbody2D d = (Rigidbody2D)Instantiate (disparoEspecial, transform.position, transform.rotation);
+		
 
-		// Desactivar la gravedad para este objeto, si no, ¡se cae!
-		d.gravityScale = 0;
 
-		// Posición de partida, en la punta de la nave
-		d.transform.Translate (Vector2.up * 0.7f);
+		if (numDisparos > 0) {
+			// Hacemos copias del prefab del disparo y las lanzamos
+			Rigidbody2D d = (Rigidbody2D)Instantiate (disparoEspecial, transform.position, transform.rotation);
 
-		// Lanzarlo
-			d.AddForce (Vector2.up * fuerza * 10, ForceMode2D.Impulse);	}
-		numDisparos--;
-	
-	
-	
+			// Desactivar la gravedad para este objeto, si no, ¡se cae!
+			d.gravityScale = 0;
+
+			// Posición de partida, en la punta de la nave
+			d.transform.Translate (Vector2.up * 0.7f);
+
+			// Lanzarlo
+			d.AddForce (Vector2.up * fuerza * 10, ForceMode2D.Impulse);	
+			numDisparos--;
+			// Sumar los disparos al marcador
+			marcador.GetComponent<ControlMarcador> ().numDisparos = numDisparos;
+		}
 	}
+
+
+
+	
+
 
 }
