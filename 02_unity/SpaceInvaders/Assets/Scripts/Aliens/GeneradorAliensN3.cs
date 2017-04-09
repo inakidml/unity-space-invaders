@@ -131,7 +131,7 @@ public class GeneradorAliensN3 : MonoBehaviour
 
 		// Si no quedan aliens, hemos terminado
 		if (numAliens == 0) {
-			SceneManager.LoadScene ("Start");
+			SceneManager.LoadScene ("YouWin");
 		}
 
 		//bajando aliens
