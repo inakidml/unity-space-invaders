@@ -13,7 +13,7 @@ public class ControlNaveTwo : MonoBehaviour {
 	public Rigidbody2D disparo;
 
 	public Rigidbody2D disparoEspecial;
-	private int numDisparos = 3;
+	public int numDisparos = 3;
 
 	// Conexión al marcador, para poder actualizarlo
 	private GameObject marcador;
@@ -23,14 +23,13 @@ public class ControlNaveTwo : MonoBehaviour {
 	{
 		// Localizamos el objeto que contiene el marcador
 		marcador = GameObject.Find ("Marcador");
+
+		marcador.GetComponent<ControlMarcador> ().numDisparosTwo = numDisparos;
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
-		// Sumar la puntuación al marcador
-		if(numDisparos>=0){
-			marcador.GetComponent<ControlMarcador> ().numDisparosTwo = numDisparos;}
 		// Calculamos la anchura visible de la cámara en pantalla
 		float distanciaHorizontal = Camera.main.orthographicSize * Screen.width / Screen.height;
 
@@ -90,6 +89,7 @@ public class ControlNaveTwo : MonoBehaviour {
 
 	void dispararEspecial(){
 		
+		
 		if(numDisparos>0){
 			// Hacemos copias del prefab del disparo y las lanzamos
 			Rigidbody2D d = (Rigidbody2D)Instantiate (disparoEspecial, transform.position, transform.rotation);
@@ -101,8 +101,12 @@ public class ControlNaveTwo : MonoBehaviour {
 			d.transform.Translate (Vector2.up * 0.7f);
 
 			// Lanzarlo
-			d.AddForce (Vector2.up * fuerza * 10, ForceMode2D.Impulse);	}
-		numDisparos--;
+			d.AddForce (Vector2.up * fuerza * 10, ForceMode2D.Impulse);	
+			numDisparos--;
+			// Sumar los disparos al marcador
+			marcador.GetComponent<ControlMarcador> ().numDisparosTwo = numDisparos;
+		}
+
 
 	}
 
