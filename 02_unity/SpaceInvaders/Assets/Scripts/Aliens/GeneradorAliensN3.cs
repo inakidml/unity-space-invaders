@@ -9,6 +9,11 @@ public class GeneradorAliensN3 : MonoBehaviour
 	public Rigidbody2D prefabAlien1;
 	public Rigidbody2D prefabAlien2;
 
+	//para limite inferior
+	private GameObject naveAzul;
+	private float limiteInferior = -2000;
+
+
 	// Referencia para guardar una matriz de objetos
 	private Rigidbody2D[,] aliens;
 
@@ -80,6 +85,15 @@ public class GeneradorAliensN3 : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		//limite inferior
+		if (limiteInferior == -2000) {
+			naveAzul = GameObject.FindGameObjectWithTag ("NaveAzul");
+			limiteInferior = naveAzul.transform.position.y - 1;
+			//Debug.Log("Limite inferior");
+			//Debug.Log (limiteInferior);
+			//Debug.Log ("------------------------");
+		}
+
 		//aumentamos la velocidad cada medio segundo
 		float ahora = Time.time;
 		float difTiempo = ahora - startTime;
@@ -124,7 +138,16 @@ public class GeneradorAliensN3 : MonoBehaviour
 						if (aliens [i, j].transform.position.x < limiteIzq) {
 							limiteAlcanzado = true;
 						}
-					}		
+					}
+
+					if (aliens [i, j].transform.position.y < limiteInferior) {
+						//Debug.Log ("Limite inferior alcanzado");
+						SceneManager.LoadScene ("GameOver");
+					} else {
+						//Debug.Log (aliens [i, j]);
+						//Debug.Log (aliens [i, j].transform.position.y);
+
+					}
 				}
 			}
 		}

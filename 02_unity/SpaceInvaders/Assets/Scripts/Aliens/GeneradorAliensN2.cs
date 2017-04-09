@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GeneradorAliensN2 : MonoBehaviour {
+public class GeneradorAliensN2 : MonoBehaviour
+{
 
 	// Publicamos la variable para conectarla desde el editor
 	public Rigidbody2D prefabAlien1;
 	public Rigidbody2D prefabAlien2;
+
+	//para limite inferior
+	private GameObject naveAzul;
+	private float limiteInferior = -2000;
+
 
 	// Referencia para guardar una matriz de objetos
 	private Rigidbody2D[,] aliens;
@@ -59,6 +65,15 @@ public class GeneradorAliensN2 : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
+		//limite inferior
+		if (limiteInferior == -2000) {
+			naveAzul = GameObject.FindGameObjectWithTag ("NaveAzul");
+			limiteInferior = naveAzul.transform.position.y - 1;
+			//Debug.Log("Limite inferior");
+			//Debug.Log (limiteInferior);
+			//Debug.Log ("------------------------");
+		}
+
 		//aumentamos la velocidad cada medio segundo
 		float ahora = Time.time;
 		float difTiempo = ahora - startTime;
@@ -103,6 +118,15 @@ public class GeneradorAliensN2 : MonoBehaviour {
 						if (aliens [i, j].transform.position.x < limiteIzq) {
 							limiteAlcanzado = true;
 						}
+
+					}
+					if (aliens [i, j].transform.position.y < limiteInferior) {
+						//Debug.Log ("Limite inferior alcanzado");
+						SceneManager.LoadScene ("GameOver");
+					} else {
+						//Debug.Log (aliens [i, j]);
+						//Debug.Log (aliens [i, j].transform.position.y);
+
 					}		
 				}
 			}
@@ -169,7 +193,7 @@ public class GeneradorAliensN2 : MonoBehaviour {
 				// Posición de cada alien
 				Vector2 posicion = new Vector2 (origen.x + (espacioH * j), origen.y + (espacioV * i));
 				Rigidbody2D alien;
-				if ((!(i%2==0)) ) {
+				if ((!(i % 2 == 0))) {
 					// Instanciamos el objeto partiendo del prefab
 					alien = (Rigidbody2D)Instantiate (prefabAlien2, posicion, transform.rotation);
 				} else {

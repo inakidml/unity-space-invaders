@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class controlExplosion : MonoBehaviour {
-	private int contadorExplosion = 50;
 	private float timer;
 	// Use this for initialization
 	void Start () {
