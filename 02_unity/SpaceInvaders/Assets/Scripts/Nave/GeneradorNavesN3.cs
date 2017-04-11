@@ -19,13 +19,14 @@ public class GeneradorNavesN3 : MonoBehaviour {
 			posicion = new Vector2 (0, -4);
 			// Instanciamos el objeto partiendo del prefab
 			naveOne = (Rigidbody2D)Instantiate (prefabNaveOne, posicion, transform.rotation);
+			naveOne.gameObject.GetComponent<ControlNave> ().numDisparos = 6;
 			break;
 		case 2:
 			// Posición de la nave 1
 			posicion = new Vector2 (-3, -4);
 			// Instanciamos el objeto partiendo del prefab
 			naveOne = (Rigidbody2D)Instantiate (prefabNaveOne, posicion, transform.rotation);
-			naveOne.gameObject.GetComponent<ControlNave> ().numDisparos = 6;
+
 
 			// Posición de la nave 2
 			posicion = new Vector2 (3, -4);
